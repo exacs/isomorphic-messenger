@@ -5,20 +5,23 @@
   "main": "index.js",
   "scripts": {
     "clean": "npm run clean-server && npm run clean-app",
-    "build": "npm run build-server && npm run build-app",
+    "build": "npm run build-server && npm run build-app && npm run build-client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean-server": "rm -rf server-es5 && mkdir server-es5",
     "clean-app": "rm -rf app-es5 && mkdir app-es5",
     "build-server": "babel -d ./server-es5 ./server -s",
     "build-app": "babel -d ./app-es5 ./app -s",
+    "build-client": "NODE_ENV=production webpack --progress --color -p",
     "start": "NODE_PATH=$NODE_PATH:./app-es5 node ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.10.1",
+    "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
-    "babel-preset-react": "^6.5.0"
+    "babel-preset-react": "^6.5.0",
+    "webpack": "^1.13.1"
   },
   "dependencies": {
     "express": "^4.13.4",
