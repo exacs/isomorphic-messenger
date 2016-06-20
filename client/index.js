@@ -1,7 +1,14 @@
-import HelloClient from 'components/HelloClient';
 import React from 'react';
 import { render } from 'react-dom';
 
+import Root from 'containers/Root';
+import createStore from 'store/configureStore';
+import { addMessage } from 'actions/index';
+
+const store = createStore(window.__INITIAL_STATE__);
+
 render(
-  <HelloClient />, document.getElementById('root')
+  <Root store={store} />, document.getElementById('root')
 );
+
+store.dispatch(addMessage('4 from client'));
