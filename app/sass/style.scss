@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+#root {
+    height: 100%;
+}
+
+/* Block "conversation" */
+.conversation {
+    position: relative;
+    height: 100%;
+}
+.conversation__message-list {
+    background: #CCC;
+    padding: 10px;
+    height: 100%;
+}
+.conversation__new-message {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Block "message-list" */
+.message-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.message-list__item {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Block message */
+.message {
+    display: inline-block;
+    padding: 10px;
+    background: #FFF;
+    border-radius: 5px;
+}
+
+
+/* Block "new-message" */
+.new-message {
+    padding: 5px;
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.new-message__input {
+    width: 100%;
+    height: 100%;
+}
+.new-message__submit {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

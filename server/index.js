@@ -19,6 +19,7 @@ app.use((req, res) => {
 
   res.send(`
     <!DOCTYPE html>
+    <link rel=stylesheet src=main.css>
     <title>An isomorphic application!!</title>
     <div id=root>${renderToString(<Root store={ store } />)}</div>
     <script>window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}</script>

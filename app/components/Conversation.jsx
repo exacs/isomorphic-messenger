@@ -1,6 +1,7 @@
 import React from 'react';
 import MessageList from 'components/MessageList';
 import NewMessage from 'components/NewMessage';
+require('sass/style.scss');
 
 export default ({ messages }) => (
   <div className="conversation">
