@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MessageList from 'components/MessageList';
+import Conversation from 'components/Conversation';
 
 const mapStateToProps = (messages) => ({
   messages: messages
 });
 
-export default connect(mapStateToProps)(MessageList);
+export default connect(mapStateToProps)(Conversation);
