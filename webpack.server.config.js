@@ -20,7 +20,7 @@ module.exports = {
   externals: nodeModules,
 
   resolve: {
-    modulesDirectories: ['node_modules', 'app'],
+    modulesDirectories: ['node_modules', 'app', 'sass'],
     extensions: ['', '.js', '.jsx']
   },
 
@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         test: /.scss$/,
-        loaders: ['css-loader', 'sass-loader'],
+        loaders: ['css-loader/locals?modules', 'sass-loader'],
       }
     ]
   }

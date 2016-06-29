@@ -1,11 +1,12 @@
 import React from 'react';
 import Message from 'components/Message';
+import styles from 'components/MessageList.scss';
 
 export default ({ messages }) => (
-  <ul className="message-list">
+  <ul className={ styles.root }>
     {
       messages.map((item, i) => (
-        <li className="message-list__item">
+        <li className={ styles.item }>
           <Message text={item} key={i} />
         </li>
       ))

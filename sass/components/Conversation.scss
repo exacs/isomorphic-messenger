@@ -1,0 +1,17 @@
+// Conversation block
+.root {
+    position: relative;
+    height: 100%;
+}
+
+.messageList {
+    background: #CCC;
+    padding: 10px;
+    height: 100%;
+}
+
+.newMessage {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

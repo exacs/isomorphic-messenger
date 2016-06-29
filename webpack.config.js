@@ -12,7 +12,7 @@ module.exports = {
   },
 
   resolve: {
-    modulesDirectories: ['node_modules', 'app'],
+    modulesDirectories: ['node_modules', 'app', 'sass'],
     extensions: ['', '.js', '.jsx']
   },
 
@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         test: /.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader'),
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules!sass-loader'),
       }
     ]
   },

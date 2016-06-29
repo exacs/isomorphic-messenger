@@ -1,14 +1,14 @@
 import React from 'react';
 import MessageList from 'components/MessageList';
 import NewMessage from 'components/NewMessage';
-require('sass/style.scss');
+import styles from 'components/Conversation.scss';
 
 export default ({ messages }) => (
-  <div className="conversation">
-    <div className="conversation__message-list">
+  <div className={ styles.root }>
+    <div className={ styles.messageList }>
       <MessageList messages={messages} />
     </div>
-    <div className="conversation__new-message">
+    <div className={ styles.newMessage }>
       <NewMessage />
     </div>
   </div>

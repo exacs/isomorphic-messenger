@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from 'components/NewMessage.scss';
 
 export default () => (
-  <form className="new-message">
-    <textarea className="new-message__input" />
-    <input className="new-message__submit" type="submit" name="submit" value="OK" />
+  <form className={ styles.root }>
+    <textarea className={ styles.input } />
+    <input className={ styles.submit } type="submit" name="submit" value="OK" />
   </form>
 );
