@@ -10,7 +10,11 @@ import createStore from 'store/configureStore';
 const app = express();
 app.use(express.static('public'));
 app.use((req, res) => {
-  const initialState = ['M1', 'M2', 'M3'];
+  const initialState = [
+    'Diodenoo qué dise usteer va usté muy cargadoo condemor está la cosa muy malar qué dise usteer no puedor papaar papaar',
+    'Se calle ustée jarl mamaar consectetur por la gloria de mi madre ad',
+    'Laboris minim ex magna te voy a borrar el cerito velit. ',
+  ];
   const store = createStore(initialState);
 
   res.send(`
