@@ -1,7 +1,8 @@
 import React from 'react';
+import styles from 'components/Conversation.scss';
+
 import MessageList from 'components/MessageList';
 import NewMessage from 'components/NewMessage';
-import styles from 'components/Conversation.scss';
 
 export default ({ messages }) => (
   <div className={ styles.container }>
