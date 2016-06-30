@@ -1,17 +1,37 @@
 // Conversation block
-.root {
+.container {
     position: relative;
     height: 100%;
 }
 
-.messageList {
-    background: #CCC;
-    padding: 10px;
+.header {
+    position: absolute;
+    top: 0;
+    height: 56px;
+    width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    background: #FFF;
+}
+
+.body {
+    background: #DDD;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
     height: 100%;
 }
 
-.newMessage {
+.footer {
+    background: #FFF;
     position: absolute;
     bottom: 0;
+    height: 56px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     width: 100%;
 }
