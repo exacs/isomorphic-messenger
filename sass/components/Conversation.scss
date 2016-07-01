@@ -2,6 +2,9 @@
 .container {
   position: relative;
   height: 100%;
+  max-width: 640px;
+  margin: auto;
+  box-shadow: 6px 3px 18px rgba(0,0,0,0.2);
 }
 
 .header {
@@ -13,10 +16,13 @@
   padding-bottom: 16px;
   padding-left: 16px;
   background: #FFF;
+  border-bottom: #CCC 1px solid;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .body {
-  background: #DDD;
+  background: radial-gradient(circle farthest-side at right bottom,#cdf8e1,#dbd0e6 79%,#b5cbed);
   padding-top: 64px;
   padding-bottom: 64px;
   padding-left: 16px;
@@ -34,4 +40,5 @@
   padding-top: 8px;
   padding-bottom: 8px;
   width: 100%;
+  border-top: #CCC 1px solid;
 }
