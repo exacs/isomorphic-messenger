@@ -1,9 +1,15 @@
+/**
+ * Webpack configuration file for Server in PRODUCTION  envs
+ *
+ * Compiles "server/index.js" into "index.js".
+ */
 'use strict';
 
 const path    = require('path');
 const webpack = require('webpack');
 const fs      = require('fs');
 
+// Specific setup for node.js execution environments
 let nodeModules = {};
 fs.readdirSync('node_modules')
   .filter(x => ['.bin'].indexOf(x) === -1)
