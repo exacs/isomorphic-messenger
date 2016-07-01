@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import styles from 'root.scss';
+import 'root.scss';
 import Root from 'containers/Root';
 import createStore from 'store/configureStore';
 import { addMessage } from 'actions/index';
