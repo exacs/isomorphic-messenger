@@ -4,15 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "npm run clean-server && npm run clean-app",
+    "clean": "npm run clean-server && npm run clean-client",
     "build": "npm run build-server && npm run build-client",
     "test": "npm run build && npm run test-eslint",
     "test-eslint": "eslint app && eslint client && eslint server",
     "clean-server": "rm index.js",
     "clean-client": "rm public/bundle.js",
-    "build-server": "webpack --progress --color --config webpack.server.config.js",
-    "build-client": "NODE_ENV=production webpack --progress --color -p",
-    "start": "npm run build && node ."
+    "build-server": "webpack --progress --color --config webpack.config.server.js",
+    "build-client": "NODE_ENV=production webpack --config webpack.config.client.js --progress --color -p",
+    "start": "npm run build && node .",
+    "start-dev": "webpack-dev-server --config webpack.config.client-dev.js --content-base dev-static/"
   },
   "author": "",
   "license": "ISC",
@@ -33,7 +34,8 @@
     "node-sass": "^3.8.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "express": "^4.13.4",

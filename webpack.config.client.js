@@ -1,8 +1,9 @@
 /**
- * Webpack configuration file for Client in DEVELOP envs
+ * Webpack configuration file for Client in PRODUCTION envs
  *
- * Compiles "client/index.js" into "public/bundle.js"
+ * Compiles "client/index.js" into "public/bundle.js" and "main.css"
  */
+
 'use strict';
 
 const path    = require('path');
