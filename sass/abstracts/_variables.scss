@@ -1,0 +1,31 @@
+//
+// Fonts
+//
+$ff-serif: 'Arbutus Slab', serif;
+$ff-sans:  Poppins;
+
+//
+// Colours
+//
+$black: #000;
+$color-main: $black !default;
+
+//
+// Font sizes
+//
+$fs-base: 15px;
+$lh-base: 20px;
+
+$fs-large: 18px;
+$lh-large: 24px;
+
+
+//
+// Short-hand values
+//
+// For "font" property
+$font-base: normal normal 400 $fs-base \/ $lh-base $ff-serif;
+$font-large: normal normal 600 $fs-large \/ $lh-large $ff-sans;
+
+// For "border" property
+$border-base: 1px solid $color-main;
