@@ -5,7 +5,7 @@ import reactRouter from './routers/react';
 
 const app = express();
 const jsonParser = bodyParser.json();
-const urlencodeParser = bodyParser.urlencoded({ extended: false });
+// const urlencodeParser = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static('public'));
 app.use('/api', jsonParser, apiRouter);
