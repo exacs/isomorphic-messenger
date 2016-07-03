@@ -10,7 +10,7 @@ const router = Router();
 
 router.post('/messages', (req, res) => {
   write(req.body.text)
-  .then(() => res.redirect(303, '/messages'));
+    .then(() => res.redirect(303, '/messages'));
 });
 
 export default router;
