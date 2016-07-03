@@ -15,7 +15,7 @@ export const read = () => new Promise((accept /* , reject */) => {
   // Simulate some latency...
   setTimeout(() => {
     accept(storedMessages);
-  }, 1000);
+  }, 100);
 });
 
 /**
@@ -28,5 +28,5 @@ export const write = (message) => new Promise((accept /* , reject */) => {
   setTimeout(() => {
     storedMessages.push(message);
     accept();
-  }, 1000);
+  }, 100);
 });
