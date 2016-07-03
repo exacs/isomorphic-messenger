@@ -1,30 +1,17 @@
 import express from 'express';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-
-import Root from 'containers/Root';
-import createStore from 'store/configureStore';
-
+import bodyParser from 'body-parser';
+import apiRouter from './routers/api';
+import postRouter from './routers/post';
+import reactRouter from './routers/react';
 
 const app = express();
-app.use(express.static('public'));
-app.use((req, res) => {
-  const initialState = [
-    'Diodenoo qué dise usteer va usté muy cargadoo condemor está la cosa muy malar'
-    + 'qué dise usteer no puedor papaar papaar',
-    'Se calle ustée jarl mamaar consectetur por la gloria de mi madre ad',
-    'Laboris minim ex magna te voy a borrar el cerito velit. ',
-  ];
-  const store = createStore(initialState);
+const jsonParser = bodyParser.json();
+const urlencodeParser = bodyParser.urlencoded({ extended: false });
 
-  res.send(`
-    <!DOCTYPE html>
-    <link rel=stylesheet href=main.css>
-    <title>An isomorphic application!!</title>
-    <div id=root>${renderToString(<Root store={store} />)}</div>
-    <script>window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}</script>
-  `);
-});
+app.use(express.static('public'));
+app.use('/api', jsonParser, apiRouter);
+app.post('*', urlencodeParser, postRouter);
+app.get('*', reactRouter);
 
 const PORT = process.env.PORT || 3000;
 
