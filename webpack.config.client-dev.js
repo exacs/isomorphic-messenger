@@ -6,7 +6,7 @@
 'use strict';
 
 const path    = require('path');
-const webpack = require('webpack');
+const base    = require('./webpack.config.js');
 
 module.exports = {
   context: path.join(__dirname, 'client'),
@@ -15,25 +15,17 @@ module.exports = {
   output: {
     path:     path.join(__dirname, 'public'),
     publicPath: '/public/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
-  resolve: {
-    modulesDirectories: ['node_modules', 'app', 'sass'],
-    extensions: ['', '.js', '.jsx']
-  },
+  resolve: Object.assign({}, base.resolve),
 
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loaders: ['babel-loader'],
-      },
+    loaders: base.module.loaders.concat(
       {
         test: /.scss$/,
         loader: 'style-loader!css-loader?modules&localIdentName=[name]--[local]--[hash:base64:5]!sass-loader',
       }
-    ]
+    ),
   },
-}
+};

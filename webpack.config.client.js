@@ -7,7 +7,7 @@
 'use strict';
 
 const path    = require('path');
-const webpack = require('webpack');
+const base    = require('./webpack.config.js');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -16,29 +16,21 @@ module.exports = {
 
   output: {
     path:     path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
-  resolve: {
-    modulesDirectories: ['node_modules', 'app', 'sass'],
-    extensions: ['', '.js', '.jsx']
-  },
+  resolve: Object.assign({}, base.resolve),
 
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loaders: ['babel-loader'],
-      },
+    loaders: base.module.loaders.concat(
       {
         test: /.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules!sass-loader'),
       }
-    ]
+    ),
   },
 
   plugins: [
     new ExtractTextPlugin('[name].css'),
-  ]
-}
+  ],
+};

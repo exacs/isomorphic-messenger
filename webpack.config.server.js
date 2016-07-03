@@ -6,14 +6,14 @@
 'use strict';
 
 const path    = require('path');
-const webpack = require('webpack');
+const base    = require('./webpack.config.js');
 const fs      = require('fs');
 
 // Specific setup for node.js execution environments
 let nodeModules = {};
 fs.readdirSync('node_modules')
   .filter(x => ['.bin'].indexOf(x) === -1)
-  .forEach(mod => {nodeModules[mod] = 'commonjs ' + mod});
+  .forEach(mod => {nodeModules[mod] = 'commonjs ' + mod;});
 
 module.exports = {
   context: path.join(__dirname, 'server'),
@@ -22,23 +22,15 @@ module.exports = {
 
   output: {
     path:     path.join(__dirname),
-    filename: 'index.js'
+    filename: 'index.js',
   },
 
   externals: nodeModules,
 
-  resolve: {
-    modulesDirectories: ['node_modules', 'app', 'sass'],
-    extensions: ['', '.js', '.jsx']
-  },
+  resolve: Object.assign({}, base.resolve),
 
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loaders: ['babel-loader'],
-      },
+    loaders: base.module.loaders.concat(
       {
         test: /.json$/,
         loaders: ['json-loader'],
@@ -47,6 +39,6 @@ module.exports = {
         test: /.scss$/,
         loaders: ['css-loader/locals?modules', 'sass-loader'],
       }
-    ]
-  }
-}
+    ),
+  },
+};
