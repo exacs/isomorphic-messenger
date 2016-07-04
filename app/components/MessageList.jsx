@@ -8,7 +8,7 @@ export default ({ messages }) => (
       Object.keys(messages).map(key => {
         const item = messages[key];
         return (
-          <li className={ styles.item } key={ item.id }>
+          <li className={ styles.item } key={ key }>
             <Message text={ item.text } status={ item.status } />
           </li>
         );

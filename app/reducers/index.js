@@ -16,13 +16,15 @@ export const SUCCESS = 'SEND_SUCCESS';
 export const FAILURE = 'SEND_FAILURE';
 
 const INITIAL_STATE = {};
+let NEXT_ID = 0;
 
 export default (messages = INITIAL_STATE, action) => {
   switch (action.type) {
     case SEND_MESSAGE_REQUEST:
+      NEXT_ID++;
       return Object.assign({}, messages, {
         [action.key]: {
-          id: -1,
+          id: NEXT_ID,
           text: action.text,
           status: SENDING,
         },
@@ -30,16 +32,16 @@ export default (messages = INITIAL_STATE, action) => {
     case SEND_MESSAGE_SUCCESS:
       return Object.assign({}, messages, {
         [action.key]: {
-          id: action.id,
-          text: action.text,
+          id: messages[action.key].id,
+          text: messages[action.key].text,
           status: SUCCESS,
         },
       });
     case SEND_MESSAGE_FAILURE:
       return Object.assign({}, messages, {
         [action.key]: {
-          id: -1,
-          text: action.text,
+          id: messages[action.key].id,
+          text: messages[action.key].text,
           status: FAILURE,
         },
       });
