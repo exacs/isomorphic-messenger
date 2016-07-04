@@ -7,3 +7,13 @@
   max-width: 320px;
   border-bottom: $border-base;
 }
+
+.statusSending {
+  border-bottom-color: #FF0;
+}
+.statusSuccess {
+  border-bottom-color: #0F0;
+}
+.statusFailure {
+  border-bottom-color: #F00;
+}

@@ -1,10 +1,5 @@
 # Next releases
 
-## v1.1.0 - Redux on client-side
-
-- Asynchronous API calls (Middlewares)
-- View updates when State changes (React-Redux)
-
 ## v1.2.0 - Testing
 
 - Add support for Selenium+Nightwatch testing
