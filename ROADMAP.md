@@ -2,7 +2,7 @@
 
 ## v1.2.0 - Testing
 
-- Add support for Selenium+Nightwatch testing
+- ~~Add support for Selenium+Nightwatch testing~~
 - Add support for API testing (Supertest)
 
 ## v1.3.0 - PostgreSQL
