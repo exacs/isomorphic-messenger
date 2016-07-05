@@ -10,7 +10,6 @@ const router = Router();
 
 // Logs the API call
 router.use((req, res, next) => {
-  console.log('---- API CALL ----');
   next();
 });
 
