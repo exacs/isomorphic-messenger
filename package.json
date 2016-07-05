@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-messenger",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "npm run build-server && npm run build-client",
     "test": "npm run build && npm run test-eslint && npm run test-server",
     "test-eslint": "eslint app && eslint client && eslint server",
-    "test-server": "mocha --compilers js:babel-register --recursive server/test",
+    "test-server": "mocha --compilers js:babel-register --recursive test-server/",
     "clean-server": "rm index.js",
     "clean-client": "rm public/bundle.js",
     "build-server": "webpack --progress --color --bail --config webpack.config.server.js",
@@ -30,6 +30,9 @@
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
     "mocha": "^2.5.3",
+    "proxyquire": "^1.7.10",
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
