@@ -10,15 +10,4 @@ chai.use(chaiAsPromised);
 import { read, write } from '../../server/logic/messages.js';
 
 describe('Messages module (read and write messages)', () => {
-  it('Should begin with an empty array', () =>
-    expect(read()).to.eventually.be.deep.equal([])
-  );
-
-  it('Should accept a string', () =>
-    expect(write('hi')).to.eventually.be.fulfilled
-  );
-
-  it('Should return now a 1-element array', () =>
-    expect(read()).to.eventually.be.deep.equal(['hi'])
-  );
 });
