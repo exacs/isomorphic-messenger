@@ -6,8 +6,7 @@
   "scripts": {
     "clean": "npm run clean-server && npm run clean-client",
     "build": "npm run build-server && npm run build-client",
-    "test": "npm run build && npm run test-eslint && npm run test-server",
-    "test-eslint": "eslint app && eslint client && eslint server",
+    "test": "npm run build && npm run test-server",
     "test-server": "mocha --compilers js:babel-register --recursive test-server/",
     "clean-server": "rm index.js",
     "clean-client": "rm public/bundle.js",
