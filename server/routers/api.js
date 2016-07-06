@@ -10,6 +10,7 @@ const router = Router();
 
 // Logs the API call
 router.use((req, res, next) => {
+  console.log('API CALL %s %s', req.url, req.path);
   next();
 });
 
@@ -25,6 +26,7 @@ router.post('/messages', (req, res) => {
 });
 
 router.all('*', (req, res) => {
+  console.log('API CALL failure %s', req.path);
   res.status(400).json({ error: 'Not implemented yet' });
 });
 
