@@ -12,30 +12,35 @@ const connectionString = process.env.DATABASE_URL || {
   port: 5432,
 };
 
-const client = new pg.Client(connectionString);
 
 export const getMessages = (limit = 10) => new Promise((accept, reject) => {
-  client.connect(connErr => {
+  pg.connect(connectionString, (connErr, client, done) => {
     if (connErr) {
-      reject('Error on connection. Code:', connErr.code);
-    } else {
-      client.query('SELECT * FROM messages')
-            .then(res => accept(res.rows.map(row => row.text)))
-            .catch(() => reject('Error on SELECT'))
-            .then(() => client.end());
+      done();
+      console.log(connErr);
+      reject('Error on connection');
+      return;
     }
+
+    client.query('SELECT * FROM messages')
+          .then(res => accept(res.rows.map(row => row.text)))
+          .catch(() => reject('Error on SELECT'))
+          .then(done);
   });
 });
 
 export const createMessage = (text) => new Promise((accept, reject) => {
-  client.connect(connErr => {
+  pg.connect(connectionString, (connErr, client, done) => {
     if (connErr) {
-      reject('Error on connection. Code:', connErr.code);
-    } else {
-      client.query('INSERT INTO messages (text) values ($1)', [text])
-            .then(res => accept(res))
-            .catch(() => reject('Error on INSERT query'))
-            .then(() => client.end());
+      done();
+      console.log(connErr);
+      reject('Error on connection');
+      return;
     }
+
+    client.query('INSERT INTO messages (text) values ($1)', [text])
+          .then(res => accept(res))
+          .catch(() => reject('Error on INSERT query'))
+          .then(() => client.end());
   });
 });
