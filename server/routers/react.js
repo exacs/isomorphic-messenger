@@ -26,5 +26,8 @@ export default (req, res) => {
       <script>window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}</script>
       <script src=/bundle.js></script>
     `);
+  }).catch(err => {
+    console.log(err);
+    res.send('Error in request');
   });
 };
