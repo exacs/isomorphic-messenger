@@ -3,7 +3,7 @@
  *
  * Handles all /api/* routes
  */
-import Router from 'express';
+import { Router } from 'express';
 import { read, write } from '../logic/messages';
 
 const router = Router();
