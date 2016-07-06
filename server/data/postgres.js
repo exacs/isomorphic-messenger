@@ -13,7 +13,7 @@ const connectionString = process.env.DATABASE_URL || {
 };
 
 
-export const getMessages = (limit = 10) => new Promise((accept, reject) => {
+export const getMessages = (/* limit = 10 */) => new Promise((accept, reject) => {
   pg.connect(connectionString, (connErr, client, done) => {
     if (connErr) {
       done();
