@@ -11,6 +11,7 @@ import { SUCCESS } from 'reducers/index';
 import { read } from '../logic/messages';
 
 export default (req, res) => {
+  console.log('REACT router: %s %s %s', req.method, req.url, req.path);
   read().then(initialState => {
     const store = createStore(initialState.map(
       (message, i) => ({ text: message, id: i, status: SUCCESS })
@@ -25,5 +26,8 @@ export default (req, res) => {
       <script>window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}</script>
       <script src=/bundle.js></script>
     `);
+  }).catch(err => {
+    console.log(err);
+    res.send('Error in request');
   });
 };
