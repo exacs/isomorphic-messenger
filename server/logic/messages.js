@@ -3,19 +3,14 @@
  *
  * Functions to write and read Messages.
  */
-
-// Simulation of a storage. Currently in memory
-const storedMessages = [];
+import { getMessages, createMessage } from '../data/postgres';
 
 /**
  * Return the list of all stored messages.
  * @return (Promise<array>) - an array of messages.
  */
 export const read = () => new Promise((accept /* , reject */) => {
-  // Simulate some latency...
-  setTimeout(() => {
-    accept(storedMessages);
-  }, 100);
+  getMessages().then(accept);
 });
 
 /**
@@ -24,9 +19,5 @@ export const read = () => new Promise((accept /* , reject */) => {
  * @return (Promise<>) - accepted
  */
 export const write = (message) => new Promise((accept /* , reject */) => {
-  // Simulate some latency...
-  setTimeout(() => {
-    storedMessages.push(message);
-    accept();
-  }, 100);
+  createMessage(message).then(accept);
 });

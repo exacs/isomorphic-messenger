@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import apiRouter from './routers/api';
 import postRouter from './routers/post';
 import reactRouter from './routers/react';
+import { messagesSchema } from './data/postgres-init';
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -15,6 +16,10 @@ app.get('*', reactRouter);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log('Listening from port', PORT);
-});
+messagesSchema()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log('Listening from port', PORT);
+    });
+  })
+  .catch(err => console.log(err));
