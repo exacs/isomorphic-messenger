@@ -8,7 +8,7 @@
     "build": "npm run build-server && npm run build-client",
     "test": "npm run && npm run test-server",
     "test-server": "NODE_PATH=$NODE_PATH:app nyc --require babel-register mocha --recursive test-server/",
-    "test-app": "NODE_PATH=$NODE_PATH:app nyc --require babel-register mocha --recursive test-app/",
+    "test-app": "NODE_PATH=$NODE_PATH:app API_ROOT='http://example-api.com'  nyc --require babel-register mocha --recursive test-app/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "clean-server": "rm index.js",
     "clean-client": "rm public/bundle.js",

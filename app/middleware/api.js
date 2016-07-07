@@ -6,8 +6,8 @@
  */
 import 'isomorphic-fetch';
 
-// Leave blank to call same-domain
-const API_ROOT = '/api';
+const API_ROOT = process.env.API_ROOT || '/api';
+
 const parseJson = response => response.json();
 const callApi = (endpoint, method, data) => {
   const fullUrl = API_ROOT + endpoint;
