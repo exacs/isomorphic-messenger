@@ -30,7 +30,7 @@ export default (messages = INITIAL_STATE, action) => {
         },
       });
     case SEND_MESSAGE_SUCCESS:
-      return Object.assign({}, messages, {
+      return Object.assign({}, messages, messages[action.key] && {
         [action.key]: {
           id: messages[action.key].id,
           text: messages[action.key].text,
@@ -38,7 +38,7 @@ export default (messages = INITIAL_STATE, action) => {
         },
       });
     case SEND_MESSAGE_FAILURE:
-      return Object.assign({}, messages, {
+      return Object.assign({}, messages, messages[action.key] && {
         [action.key]: {
           id: messages[action.key].id,
           text: messages[action.key].text,
