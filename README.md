@@ -14,3 +14,4 @@ El objetivo de este proyecto es crear una aplicación web medianamente compleja
 combinando lo bueno de ambos mundos e intentando usar teconologías que sean
 compatibles para el servidor y para el cliente.
 
+...
