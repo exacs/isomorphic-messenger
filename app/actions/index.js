@@ -1,3 +1,4 @@
+import { CALL_API } from 'middleware/api';
 //
 // Synchronous actions
 //
@@ -20,3 +21,23 @@ export const sendMessageFailure = id => ({
   id,
 });
 
+//
+// Asynchronous actions
+//
+let NEXT_CLIENT_ID = 0;
+export const sendMessage = text => ({
+  [CALL_API]: {
+    endpoint: '/messages',
+    actionTypes: [
+      SEND_MESSAGE_REQUEST,
+      SEND_MESSAGE_SUCCESS,
+      SEND_MESSAGE_FAILURE,
+    ],
+    method: 'POST',
+    data: { text },
+  },
+
+  key: `key-${NEXT_CLIENT_ID++}`,
+  id: 1,
+  text,
+});
