@@ -8,11 +8,9 @@ const expect = chai.expect;
 chai.use(chaiAsPromised);
 
 import deepFreeze from 'deep-freeze';
-import {
-  SEND_MESSAGE_REQUEST,
-  SEND_MESSAGE_SUCCESS,
-  SEND_MESSAGE_FAILURE,
-} from '../../app/actions/index';
+import { SEND_MESSAGE_REQUEST,
+         SEND_MESSAGE_SUCCESS,
+         SEND_MESSAGE_FAILURE } from '../../app/actions/index';
 import reduce, { SENDING, SUCCESS, FAILURE } from '../../app/reducers/index.js';
 
 describe('Strange action', function() {

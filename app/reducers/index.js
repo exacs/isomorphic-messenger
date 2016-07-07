@@ -1,8 +1,6 @@
-import {
-  SEND_MESSAGE_REQUEST,
-  SEND_MESSAGE_SUCCESS,
-  SEND_MESSAGE_FAILURE,
-} from 'actions/index';
+import { SEND_MESSAGE_REQUEST,
+         SEND_MESSAGE_SUCCESS,
+         SEND_MESSAGE_FAILURE } from 'actions/index';
 
 // The state is an array of Messages. Each Message is an object with two fields:
 // - A text (string) representing the text of the  message
