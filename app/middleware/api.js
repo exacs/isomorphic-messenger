@@ -6,19 +6,28 @@
  */
 import 'isomorphic-fetch';
 
-// Leave blank to call same-domain
-const API_ROOT = '/api';
-const parseJson = response => response.json();
+const API_ROOT = process.env.API_ROOT || '/api';
+
 const callApi = (endpoint, method, data) => {
   const fullUrl = API_ROOT + endpoint;
-  return fetch(fullUrl, {
+  const requestObj = {
     method,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-  }).then(parseJson);
+  };
+  return fetch(fullUrl, requestObj)
+    .then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      }
+      return Promise.reject({
+        status: response.status,
+        statusText: response.statusText,
+      });
+    });
 };
 
 //
@@ -44,14 +53,13 @@ export default () => next => action => {
   const [requestType, successType, failureType] = actionTypes;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, method, data).then(
-    response => next(actionWith({
+  return callApi(endpoint, method, data)
+    .then(response => next(actionWith({
       response,
       type: successType,
-    })),
-    error => next(actionWith({
+    })))
+    .catch(error => next(actionWith({
       type: failureType,
       error: error.message || 'Something bad happened',
-    }))
-  );
+    })));
 };

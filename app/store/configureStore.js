@@ -1,7 +1,5 @@
-import { createStore, applyMiddleware } from 'redux';
-import api from 'middleware/api';
-import reducer from 'reducers/index';
-
-export default (preloadedState) => (
-  createStore(reducer, preloadedState, applyMiddleware(api))
-);
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./configureStore.prod');
+} else {
+  module.exports = require('./configureStore.dev');
+}
