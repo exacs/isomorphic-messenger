@@ -7,14 +7,18 @@
 
 const path    = require('path');
 const base    = require('./webpack.config.js');
+const webpack = require('webpack');
 
 module.exports = {
   context: path.join(__dirname, 'client'),
-  entry: './index.js',
+  entry: [
+    'webpack-hot-middleware/client',
+    './index.js',
+  ],
 
   output: {
-    path:     path.join(__dirname, 'public'),
-    publicPath: '/public/',
+    path:     path.join(__dirname, 'dev-static'),
+    publicPath: '/dev-public/',
     filename: 'bundle.js',
   },
 
@@ -28,4 +32,10 @@ module.exports = {
       }
     ),
   },
+
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+  ],
 };
