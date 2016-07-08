@@ -15,14 +15,21 @@ router.use((req, res, next) => {
 });
 
 router.get('/messages', (req, res) => {
-  read().then(messages => res.status(200).json(messages));
+  read()
+    .then(messages => res.status(200).json(messages))
+    .catch(() => res.status(500).json({ error: 'Service unavailable' }));
 });
 
 router.post('/messages', (req, res) => {
+  // Check parameters
+  if (!req || !req.body || !req.body.text) {
+    console.log(req.body);
+    res.status(400).json({ error: 'Missing arguments: "text"' });
+    return;
+  }
   write(req.body.text)
-    .then(() => res.status(201).json({
-      text: req.body.text,
-    }));
+    .then(() => res.status(201).json({ text: req.body.text }))
+    .catch(() => res.status(500).json({ error: 'Service unavailable' }));
 });
 
 router.all('*', (req, res) => {
