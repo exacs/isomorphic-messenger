@@ -1,11 +1,5 @@
 # Next releases
 
-## v1.4.0 - Redux testing and tooling
-
-- Redux testing
-- Code Climate integration
-- Devtools: time-traveling
-
 ## v1.5.0 - API enhancement
 
 - API documentation
