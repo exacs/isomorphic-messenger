@@ -7,6 +7,7 @@
 'use strict';
 
 const path    = require('path');
+const webpack = require('webpack');
 const base    = require('./webpack.config.js');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -32,5 +33,6 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin('[name].css'),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
   ],
 };
