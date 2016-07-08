@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-messenger",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "clean-server": "rm index.js",
     "clean-client": "rm public/bundle.js",
-    "build-server": "webpack --progress --color --bail --config webpack.config.server.js",
+    "build-server": "NODE_ENV=production webpack --progress --color --bail --config webpack.config.server.js",
     "build-client": "NODE_ENV=production webpack --config webpack.config.client.js --progress --color -p --bail",
     "postinstall": "npm run build",
     "start": "node .",
