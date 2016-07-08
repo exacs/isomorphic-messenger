@@ -5,7 +5,7 @@ import DevTools from 'containers/DevTools';
 
 export default ({store}) => (
   <Provider store={store}>
-    <div>
+    <div className="root">
       <App />
       <DevTools />
     </div>

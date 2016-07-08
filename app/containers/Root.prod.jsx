@@ -4,7 +4,7 @@ import App from 'containers/App';
 
 export default ({ store }) => (
   <Provider store={store}>
-    <div>
+    <div className="root">
       <App />
     </div>
   </Provider>
