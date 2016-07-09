@@ -1,12 +1,13 @@
 {
   "name": "isomorphic-messenger",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "npm run clean-server && npm run clean-client",
     "build": "npm run build-server && npm run build-client",
-    "test": "npm run && npm run test-server && npm run test-app",
+    "test": "NODE_PATH=$NODE_PATH:app API_ROOT='http://example-api.com' npm run test-all",
+    "test-all": "nyc --require babel-register mocha --recursive test-server/ test-app/",
     "test-server": "NODE_PATH=$NODE_PATH:app nyc --require babel-register mocha --recursive test-server/",
     "test-app": "NODE_PATH=$NODE_PATH:app API_ROOT='http://example-api.com'  nyc --require babel-register mocha --recursive test-app/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

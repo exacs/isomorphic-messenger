@@ -1,3 +1,109 @@
 /* eslint-env mocha */
 
 // Testers
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+const expect = chai.expect;
+chai.use(chaiAsPromised);
+import proxyquire from 'proxyquire';
+
+//
+// pg.client stubs
+//
+// A pg client that always fails queries
+const pgClientFailedQueryStub = {
+  query() {
+    return new Promise((accept, reject) => reject());
+  },
+};
+
+// A pg client that always return one row
+const pgClientOneRowStub = {
+  query() {
+    return new Promise(accept =>
+      accept({
+        rows: [
+          { text: 'Row 1 text' },
+        ],
+      })
+    );
+  },
+};
+
+// A pg client that always succeed a query
+const pgClientSuccessQueryStub = {
+  query() {
+    return new Promise(accept => accept());
+  },
+};
+
+//
+// pg stubs
+//
+// A pg object that always have a failed connection
+const pgFailedConnectionStub = {
+  connect(connectionString, callback) {
+    callback(true, null, () => {});
+  },
+};
+
+// A pg object that has a successful connection but fails on queries
+const pgSuccessConnectionStubFactory = client => ({
+  connect(connectionString, callback) {
+    callback(false, client, () => {});
+  },
+});
+
+describe('getMessages', function() {
+  it('Should notify the connection error', function() {
+
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgFailedConnectionStub,
+    });
+
+    return expect(postgres.getMessages()).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query error', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientFailedQueryStub),
+    });
+
+    return expect(postgres.getMessages()).to.be.eventually.rejected;
+  });
+
+  it('Should return rows of messages', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientOneRowStub),
+    });
+
+    return expect(postgres.getMessages()).to.be.eventually.deep.equal(['Row 1 text']);
+  });
+});
+
+describe('createMessages', function() {
+  it('Should notify the connection error', function() {
+
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgFailedConnectionStub,
+    });
+
+    return expect(postgres.createMessage()).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query error', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientFailedQueryStub),
+    });
+
+    return expect(postgres.createMessage()).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query success', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientSuccessQueryStub),
+    });
+
+    return expect(postgres.createMessage()).to.be.eventually.fulfilled;
+  });
+});

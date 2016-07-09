@@ -1,10 +1,5 @@
 # Next releases
 
-## v1.5.0 - API enhancement
-
-- API documentation
-- API error handling
-
 ## v1.6.0 - Conversation API (migration)
 
 - New API endpoint: api/conversations
