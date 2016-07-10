@@ -13,10 +13,22 @@ import bodyParser from 'body-parser';
 
 const jsonParser = bodyParser.json();
 
-// Change read and write functions from logic
 const messagesLogicStub = {
-  read: () => new Promise(accept => accept([])),
-  write: () => new Promise(accept => accept()),
+  read() {
+    return new Promise(accept => accept([]));
+  },
+  write() {
+    return new Promise(accept => accept());
+  },
+};
+
+const chatsLogicStub = {
+  default(chatId) {
+    return {
+      read() { return new Promise(accept => accept([`Message of chat ${chatId}`])); },
+      write() { return new Promise(accept => accept()); },
+    };
+  },
 };
 
 //
@@ -24,6 +36,7 @@ const messagesLogicStub = {
 //
 const apiRouter = proxyquire('../../server/routers/api', {
   '../logic/messages': messagesLogicStub,
+  '../logic/chats': chatsLogicStub,
 }).default;
 const app = express();
 app.use(jsonParser, apiRouter);
@@ -60,5 +73,39 @@ describe('POST /messages', function() {
       .expect('Content-Type', /json/)
       .expect(201)
       .end(done);
+  });
+});
+
+describe('Resource /chats/:chatid/messages', function() {
+  describe('GET request', function() {
+    it('Should response with a emtpy array JSON object', function(done) {
+      request(app)
+        .get('/chats/1/messages')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.be.deep.equal(['Message of chat 1']);
+          done();
+        });
+    });
+  });
+
+  describe('POST request', function() {
+    it('Should show that the "text" argument is missing', function(done) {
+      request(app)
+        .post('/chats/1/messages')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .end(done);
+    });
+
+    it('Should success', function(done) {
+      request(app)
+        .post('/chats/1/messages')
+        .send({ text: 'Hi' })
+        .expect('Content-Type', /json/)
+        .expect(201)
+        .end(done);
+    });
   });
 });
