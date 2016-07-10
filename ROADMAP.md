@@ -1,18 +1,16 @@
 # Next releases
 
-## v1.6.0 - Conversation API (migration)
-
-- New API endpoint: api/conversations
-- New API endpoint: api/conversations/:conversation_id
-- Deprecate API endpoint: api/messages. Use api/conversations/1
-- Read from new and old database resources
-- Write only in new database resources
-
 ## v1.7.0 - Frontend
 
 - CSS
 - React-router
 - Conversational components
+
+## v1.8.0 - Timestamp
+
+- Timestamp to messages
+- Fetch messages asynchronously
+- Display a "show more" button
 
 ## v2.0.0 - Conversation API
 
