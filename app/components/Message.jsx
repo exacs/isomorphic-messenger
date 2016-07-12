@@ -5,7 +5,7 @@ export const SENDING = 'SENDING';
 export const SUCCESS = 'SUCCESS';
 export const FAILURE = 'FAILURE';
 
-export default ({ status, text }) => {
+function Message({ status, text }) {
   // Map reducers status with styles status
   const map = {
     [SENDING]: styles.statusSending,
@@ -16,7 +16,15 @@ export default ({ status, text }) => {
     styles.root,
     map[status] || styles.statusSending,
   ];
+
   return (
     <div className={ classes.join(' ') }>{ text }</div>
   );
+}
+
+Message.propTypes = {
+  status: React.PropTypes.oneOf([SENDING, SUCCESS, FAILURE]),
+  text: React.PropTypes.string,
 };
+
+export default Message;
