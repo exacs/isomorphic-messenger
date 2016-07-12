@@ -1,13 +1,8 @@
 # Next releases
 
-## v1.7.0 - Frontend
-
-- CSS
-- React-router
-- Conversational components
-
 ## v1.8.0 - Timestamp
 
+- Conversational components
 - Timestamp to messages
 - Fetch messages asynchronously
 - Display a "show more" button
