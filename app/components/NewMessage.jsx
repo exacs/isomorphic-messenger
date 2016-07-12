@@ -4,7 +4,7 @@ import styles from 'components/NewMessage.scss';
 export default class NewMessage extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: 'Hello' };
+    this.state = { value: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -14,6 +14,7 @@ export default class NewMessage extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.onSubmit(this.state.value);
+    this.setState({ value: '' });
   }
   render() {
     return (
@@ -33,7 +34,5 @@ export default class NewMessage extends Component {
                value="OK" />
       </form>
     );
-
   }
 }
-
