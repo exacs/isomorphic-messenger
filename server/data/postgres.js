@@ -7,7 +7,7 @@ pg.defaults.ssl = true;
 
 const connectionString = process.env.DATABASE_URL || {
   user: 'carlos',
-  databse: 'minimal_messenger',
+  database: 'minimal_messenger',
   password: 'carlos',
   port: 5432,
 };
