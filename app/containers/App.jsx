@@ -15,6 +15,7 @@ const mapMessageToMessage = message => {
     [REDUX_SUCCESS]: REACT_SUCCESS,
     [REDUX_FAILURE]: REACT_FAILURE,
   };
+
   return {
     status: statusMap[message.status],
     text: message.text,
