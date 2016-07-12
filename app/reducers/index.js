@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import messagesReducer from './messages';
-import conversationsReducer from './conversations';
+import messages from './messages';
+import conversations from './conversations';
 
 const rootReducer = combineReducers({
-  messagesReducer,
-  conversationsReducer,
+  messages,
+  conversations,
 });
 
 export default rootReducer;
