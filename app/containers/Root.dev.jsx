@@ -1,12 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import App from 'containers/App';
+import { Router } from 'react-router';
 import DevTools from 'containers/DevTools';
 
-export default ({store}) => (
+import routes from 'routes';
+
+export default ({ store, history }) => (
   <Provider store={store}>
     <div className="root">
-      <App />
+      <Router history={history} routes={routes} />
       <DevTools />
     </div>
   </Provider>
