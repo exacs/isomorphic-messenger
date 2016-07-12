@@ -3,7 +3,7 @@ import { sendMessage } from 'actions/index';
 import Conversation from 'components/Conversation';
 import { SENDING as REDUX_SENDING,
          SUCCESS as REDUX_SUCCESS,
-         FAILURE as REDUX_FAILURE } from 'reducers/index';
+         FAILURE as REDUX_FAILURE } from 'reducers/messages';
 import { SENDING as REACT_SENDING,
          SUCCESS as REACT_SUCCESS,
          FAILURE as REACT_FAILURE } from 'components/Message';
@@ -21,8 +21,8 @@ const mapMessageToMessage = message => {
   };
 };
 
-const mapStateToProps = (messages) => ({
-  messages: messages.map(mapMessageToMessage),
+const mapStateToProps = ({ messages }) => ({
+  messages: Object.keys(messages).map(key => mapMessageToMessage(messages[key])),
 });
 
 const mapDispatchToProps = (dispatch) => ({

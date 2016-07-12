@@ -11,9 +11,9 @@ import deepFreeze from 'deep-freeze';
 import { SEND_MESSAGE_REQUEST,
          SEND_MESSAGE_SUCCESS,
          SEND_MESSAGE_FAILURE } from '../../app/actions/index';
-import reduce, { SENDING, SUCCESS, FAILURE } from '../../app/reducers/index.js';
+import reduce, { SENDING, SUCCESS, FAILURE } from '../../app/reducers/messages.js';
 
-describe('Strange action', function() {
+describe('reducers/messages: Unknown action', function() {
   it('Should ignore an unknown action', function() {
     const obj = {
       key1: 'value1',
@@ -30,7 +30,7 @@ describe('Strange action', function() {
   });
 });
 
-describe('Action SEND_MESSAGE_REQUEST', function() {
+describe('reducers/messages: Action SEND_MESSAGE_REQUEST', function() {
   it('Should reduce correctly', function() {
     const obj = {};
     deepFreeze(obj);
@@ -45,7 +45,7 @@ describe('Action SEND_MESSAGE_REQUEST', function() {
   });
 });
 
-describe('Action SEND_MESSAGE_SUCCESS', function() {
+describe('reducers/messages: Action SEND_MESSAGE_SUCCESS', function() {
   const obj = {
     key_ok: {
       id: 870,
@@ -79,7 +79,7 @@ describe('Action SEND_MESSAGE_SUCCESS', function() {
   });
 });
 
-describe('Action SEND_MESSAGE_FAILURE', function() {
+describe('reducers/messages: Action SEND_MESSAGE_FAILURE', function() {
   const obj = {
     key_ok: {
       id: 870,
