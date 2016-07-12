@@ -7,15 +7,20 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import Root from 'containers/Root';
 import createStore from 'store/configureStore';
-import { SUCCESS } from 'reducers/index';
+import { SUCCESS } from 'reducers/messages';
 import { read } from '../logic/messages';
 
 export default (req, res) => {
   console.log('REACT router: %s %s %s', req.method, req.url, req.path);
-  read().then(initialState => {
-    const store = createStore(initialState.map(
-      (message, i) => ({ text: message, id: i, status: SUCCESS })
-    ));
+  read().then(messages => {
+    const initialState = {
+      messages: messages.map(
+        (message, i) => ({ text: message, id: i, status: SUCCESS })
+      ),
+      conversations: {},
+    };
+
+    const store = createStore(initialState);
 
     res.set('Content-Type', 'text/html');
     res.send(`

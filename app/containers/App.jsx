@@ -22,7 +22,7 @@ const mapMessageToMessage = message => {
 };
 
 const mapStateToProps = ({ messages }) => ({
-  messages: messages.map(mapMessageToMessage),
+  messages: Object.keys(messages).map(key => mapMessageToMessage(messages[key])),
 });
 
 const mapDispatchToProps = (dispatch) => ({
