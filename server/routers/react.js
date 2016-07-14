@@ -22,7 +22,7 @@ export default (req, res) => {
           messages: messages.map(
             (message, i) => ({ text: message, id: i, status: SUCCESS })
           ),
-          conversations: {},
+          chats: {},
           routing: {},
         };
         const store = createStore(initialState);

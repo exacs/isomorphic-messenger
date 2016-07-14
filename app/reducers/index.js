@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 import messages from './messages';
-import conversations from './conversations';
+import chats from './chats';
 
 const rootReducer = combineReducers({
   messages,
-  conversations,
+  chats,
   routing: routerReducer,
 });
 
