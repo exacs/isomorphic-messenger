@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { sendMessage } from 'actions/index';
-import Conversation from 'components/Conversation';
+import Chat from 'components/Chat';
 import { SENDING as REDUX_SENDING,
          SUCCESS as REDUX_SUCCESS,
          FAILURE as REDUX_FAILURE } from 'reducers/messages';
@@ -30,4 +30,4 @@ const mapDispatchToProps = (dispatch) => ({
   sendMessage: text => dispatch(sendMessage(text)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Conversation);
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);
