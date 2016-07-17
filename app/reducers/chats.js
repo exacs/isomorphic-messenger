@@ -3,12 +3,13 @@ import { SEND_MESSAGE_REQUEST,
 
 const INITIAL_STATE = {};
 
-function addMessage(chat, messageKey) {
+function addMessage(chat, messageKey, chatId) {
   return ({
     messages: chat && chat.messages ?
               chat.messages.concat(messageKey) :
               [messageKey],
     title: (chat && chat.title) || '',
+    id: (chat && chat.id) || chatId,
   });
 }
 
@@ -21,7 +22,7 @@ function chatsReducer(chats = INITIAL_STATE, action) {
     case FETCH_MESSAGES_SUCCESS:
       return Object.assign({}, chats, {
         [action.chatId]: action.response.reduce(
-          (acc, message) => addMessage(acc, message.id),
+          (acc, message) => addMessage(acc, message.id, action.chatId),
           chats[action.chatId]
         ),
       });

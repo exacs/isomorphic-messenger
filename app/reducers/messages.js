@@ -17,10 +17,10 @@ export const FAILURE = 'SEND_FAILURE';
 const INITIAL_STATE = {};
 let NEXT_ID = 0;
 
-const messagesArrayToObject = messages => {
+const messagesArrayToObject = (messages, options) => {
   const newObject = {};
   messages.forEach(({ text, id }) => {
-    newObject[id] = { text, id };
+    newObject[id] = Object.assign({}, { text, id }, options);
   });
   return newObject;
 };
@@ -54,7 +54,11 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
       });
 
     case FETCH_MESSAGES_SUCCESS:
-      return Object.assign({}, messages, messagesArrayToObject(action.response));
+      return Object.assign(
+        {},
+        messages,
+        messagesArrayToObject(action.response, { status: SUCCESS })
+      );
     default:
       return messages;
   }

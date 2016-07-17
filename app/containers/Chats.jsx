@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import ChatList from 'components/ChatList';
 
+import { connect } from 'react-redux';
+
 const Chats = ({ chats, children }) => (
   <div>
     <aside>
@@ -23,4 +25,15 @@ Chats.propTypes = {
   children: PropTypes.element,
 };
 
-export default Chats;
+const mapChatToChat = chat => ({
+  title: chat.title,
+  link: `/chats/${chat.id}`,
+});
+
+const mapStateToProps = ({ chats }) => ({
+  chats: Object.keys(chats).map(key => mapChatToChat(chats[key])),
+});
+
+const mapDispatchToProps = () => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chats);
