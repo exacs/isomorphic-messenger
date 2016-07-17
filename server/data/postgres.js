@@ -26,7 +26,10 @@ const connect = (reject, callback) => {
 export const getMessagesFromChat = chatId => new Promise((accept, reject) => {
   connect(reject, (client, done) => {
     client.query('SELECT * FROM messages WHERE chat_id = $1', [chatId])
-          .then(res => accept(res.rows.map(row => row.text)))
+          .then(res => accept(res.rows.map(row => ({
+            id: row.message_id,
+            text: row.text,
+          }))))
           .catch(() => reject('Error on SELECT'))
           .then(done);
   });
@@ -44,7 +47,10 @@ export const createMessageInChat = (chatId, text) => new Promise((accept, reject
 export const getMessages = (/* limit = 10 */) => new Promise((accept, reject) => {
   connect(reject, (client, done) => {
     client.query('SELECT * FROM messages')
-          .then(res => accept(res.rows.map(row => row.text)))
+          .then(res => accept(res.rows.map(row => ({
+            id: row.message_id,
+            text: row.text,
+          }))))
           .catch(() => reject('Error on SELECT'))
           .then(done);
   });

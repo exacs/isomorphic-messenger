@@ -23,7 +23,7 @@ const pgClientOneRowStub = {
     return new Promise(accept =>
       accept({
         rows: [
-          { text: 'Row 1 text' },
+          { message_id: 1, text: 'Row 1 text' },
         ],
       })
     );
@@ -77,7 +77,10 @@ describe('getMessages', function() {
       pg: pgSuccessConnectionStubFactory(pgClientOneRowStub),
     });
 
-    return expect(postgres.getMessages()).to.be.eventually.deep.equal(['Row 1 text']);
+    return expect(postgres.getMessages()).to.be.eventually.deep.equal([{
+      id: 1,
+      text: 'Row 1 text',
+    }]);
   });
 });
 

@@ -17,8 +17,15 @@ export const FAILURE = 'SEND_FAILURE';
 const INITIAL_STATE = {};
 let NEXT_ID = 0;
 
+const messagesArrayToObject = messages => {
+  const newObject = {};
+  messages.forEach(({ text, id }) => {
+    newObject[id] = { text, id };
+  });
+  return newObject;
+};
+
 const messagesReducer = (messages = INITIAL_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case SEND_MESSAGE_REQUEST:
       NEXT_ID++;
@@ -47,13 +54,7 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
       });
 
     case FETCH_MESSAGES_SUCCESS:
-      return Object.assign({}, messages, action.response.map(
-        message => ({
-          id: 0,
-          text: message,
-          status: SUCCESS,
-        })
-      ));
+      return Object.assign({}, messages, messagesArrayToObject(action.response));
     default:
       return messages;
   }
