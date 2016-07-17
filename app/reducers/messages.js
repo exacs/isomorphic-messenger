@@ -1,6 +1,7 @@
 import { SEND_MESSAGE_REQUEST,
          SEND_MESSAGE_SUCCESS,
-         SEND_MESSAGE_FAILURE } from 'actions/index';
+         SEND_MESSAGE_FAILURE,
+         FETCH_MESSAGES_SUCCESS } from 'actions/index';
 
 // The state is an array of Messages. Each Message is an object with two fields:
 // - A text (string) representing the text of the  message
@@ -17,6 +18,7 @@ const INITIAL_STATE = {};
 let NEXT_ID = 0;
 
 const messagesReducer = (messages = INITIAL_STATE, action) => {
+  console.log(action);
   switch (action.type) {
     case SEND_MESSAGE_REQUEST:
       NEXT_ID++;
@@ -43,6 +45,15 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
           status: FAILURE,
         },
       });
+
+    case FETCH_MESSAGES_SUCCESS:
+      return Object.assign({}, messages, action.response.map(
+        message => ({
+          id: 0,
+          text: message,
+          status: SUCCESS,
+        })
+      ));
     default:
       return messages;
   }
