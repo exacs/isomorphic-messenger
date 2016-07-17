@@ -37,7 +37,7 @@ describe('Synchronous actions', function() {
 describe('Asynchronous action "sendMessage"', function() {
   it('Should create SEND_MESSAGE_SUCCESS when send message is correct', function() {
     // Nock
-    nock('http://example-api.com')
+    nock('http://example.com/api')
       .post('/messages', { text: 'Some message' })
       .reply(200, { body: { text: 'Some message' } });
 
@@ -57,7 +57,7 @@ describe('Asynchronous action "sendMessage"', function() {
   });
 
   it('Should create SEND_MESSAGE_FAILURE when send message is not correct', function() {
-    nock('http://example-api.com')
+    nock('http://example.com/api')
       .post('/messages')
       .reply(500, {});
 
@@ -77,7 +77,7 @@ describe('Asynchronous action "sendMessage"', function() {
 describe('Asynchronous action "fetchMessages"', function() {
   it('Should create FETCH_MESSAGES_SUCCESS always', function() {
     // Nock
-    nock('http://example-api.com')
+    nock('http://example.com/api')
       .get('/chats/1/messages')
       .reply(200, { body: ['Some message', 'some other'] });
 
@@ -95,7 +95,7 @@ describe('Asynchronous action "fetchMessages"', function() {
 
   it('Should create FETCH_MESSAGES_SUCCESS always', function() {
     // Nock
-    nock('http://example-api.com')
+    nock('http://example.com/api')
       .get('/chats/1/messages')
       .reply(500, {});
 

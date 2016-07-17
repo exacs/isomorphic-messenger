@@ -6,10 +6,10 @@
   "scripts": {
     "clean": "npm run clean-server && npm run clean-client",
     "build": "npm run build-server && npm run build-client",
-    "test": "NODE_PATH=$NODE_PATH:app API_ROOT='http://example-api.com' npm run test-all",
-    "test-all": "nyc --require babel-register mocha --recursive test-server/ test-app/",
+    "test": "NODE_PATH=$NODE_PATH:app API_ROOT='http://example.com' npm run test-all",
+    "test-all": "PORT=80 API_HOST='http://example.com' nyc --require babel-register mocha --recursive test-server/ test-app/",
     "test-server": "NODE_PATH=$NODE_PATH:app nyc --require babel-register mocha --recursive test-server/",
-    "test-app": "NODE_PATH=$NODE_PATH:app API_ROOT='http://example-api.com'  nyc --require babel-register mocha --recursive test-app/",
+    "test-app": "NODE_PATH=$NODE_PATH:app PORT=80 API_HOST='http://example.com'  nyc --require babel-register mocha --recursive test-app/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "clean-server": "rm index.js",
     "clean-client": "rm public/bundle.js",
