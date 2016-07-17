@@ -16,8 +16,8 @@
     "build-server": "NODE_ENV=production webpack --progress --color --bail --config webpack.config.server.js",
     "build-client": "NODE_ENV=production webpack --config webpack.config.client.js --progress --color -p --bail",
     "postinstall": "npm run build",
-    "start": "node .",
-    "start-dev": "node index-dev.js"
+    "start": "API_HOST='http://localhost' node .",
+    "start-dev": "PORT=4000 API_HOST='http://localhost' node index-dev.js"
   },
   "author": "",
   "license": "ISC",
