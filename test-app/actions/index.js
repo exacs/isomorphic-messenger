@@ -13,7 +13,11 @@ import api from 'middleware/api.js';
 import { SEND_MESSAGE_REQUEST,
          SEND_MESSAGE_SUCCESS,
          SEND_MESSAGE_FAILURE,
-         sendMessage } from 'actions/index.js';
+         FETCH_MESSAGES_REQUEST,
+         FETCH_MESSAGES_SUCCESS,
+         FETCH_MESSAGES_FAILURE,
+         sendMessage,
+         fetchMessages } from 'actions/index.js';
 
 const middlewares = [api];
 const mockStore = configureStore(middlewares);
@@ -40,12 +44,15 @@ describe('Asynchronous action "sendMessage"', function() {
     const store = mockStore({});
 
     return store.dispatch(sendMessage('Some message'))
-                .then(() => {
+                .then(res => {
                   const [{ type: t1 }, { type: t2 }] = store.getActions();
                   expect([t1, t2]).to.be.deep.equal([
                     SEND_MESSAGE_REQUEST,
                     SEND_MESSAGE_SUCCESS,
                   ]);
+
+                  const [a1, a2] = store.getActions();
+                  expect(a2.response.body.text).to.be.equal('Some message');
                 });
   });
 
@@ -62,6 +69,44 @@ describe('Asynchronous action "sendMessage"', function() {
                   expect([t1, t2]).to.be.deep.equal([
                     SEND_MESSAGE_REQUEST,
                     SEND_MESSAGE_FAILURE,
+                  ]);
+                });
+  });
+});
+
+describe('Asynchronous action "fetchMessages"', function() {
+  it('Should create FETCH_MESSAGES_SUCCESS always', function() {
+    // Nock
+    nock('http://example-api.com')
+      .get('/chats/1/messages')
+      .reply(200, { body: ['Some message', 'some other'] });
+
+    const store = mockStore({});
+
+    return store.dispatch(fetchMessages())
+                .then(() => {
+                  const [{ type: t1 }, { type: t2 }] = store.getActions();
+                  expect([t1, t2]).to.be.deep.equal([
+                    FETCH_MESSAGES_REQUEST,
+                    FETCH_MESSAGES_SUCCESS,
+                  ]);
+                });
+  });
+
+  it('Should create FETCH_MESSAGES_SUCCESS always', function() {
+    // Nock
+    nock('http://example-api.com')
+      .get('/chats/1/messages')
+      .reply(500, {});
+
+    const store = mockStore({});
+
+    return store.dispatch(fetchMessages())
+                .then(() => {
+                  const [{ type: t1 }, { type: t2 }] = store.getActions();
+                  expect([t1, t2]).to.be.deep.equal([
+                    FETCH_MESSAGES_REQUEST,
+                    FETCH_MESSAGES_FAILURE,
                   ]);
                 });
   });
