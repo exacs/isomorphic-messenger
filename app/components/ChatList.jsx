@@ -6,10 +6,10 @@ const ChatList = ({ chats }) => (
     {
       chats.map(({ title, link }, key) => (
         <li key={ key }>
-          <ChatListItem title={ title } />
+          <ChatListItem link={ link } title={ title } />
         </li>
       ))
-    })
+    }
   </ul>
 );
 
