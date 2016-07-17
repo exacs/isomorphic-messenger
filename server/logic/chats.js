@@ -4,20 +4,18 @@
  * Functions to write and read messages from a chat
  */
 import { getMessagesFromChat,
-         createMessagesInChat } from '../data/postgres';
+         createMessagesInChat,
+         getChatInfo } from '../data/postgres';
 
 export default chatId => ({
+  info() {
+    return getChatInfo(chatId);
+  },
   read() {
-    return new Promise(accept => {
-      getMessagesFromChat(chatId)
-        .then(accept);
-    });
+    return getMessagesFromChat(chatId);
   },
 
   write(message) {
-    return new Promise(accept => {
-      createMessagesInChat(chatId, message)
-        .then(accept);
-    });
+    return createMessagesInChat(chatId, message);
   },
 });

@@ -30,6 +30,18 @@ const pgClientOneRowStub = {
   },
 };
 
+const pgClientOneChatRowStub = {
+  query() {
+    return new Promise(accept =>
+      accept({
+        rows: [
+          { chat_id: 1, title: 'Row 1 title' },
+        ],
+      })
+    );
+  },
+};
+
 // A pg client that always succeed a query
 const pgClientSuccessQueryStub = {
   query() {
@@ -108,5 +120,35 @@ describe('createMessages', function() {
     });
 
     return expect(postgres.createMessage()).to.be.eventually.fulfilled;
+  });
+});
+
+describe('getChatInfo', function() {
+  it('Should notify the connection error', function() {
+
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgFailedConnectionStub,
+    });
+
+    return expect(postgres.getChatInfo()).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query error', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientFailedQueryStub),
+    });
+
+    return expect(postgres.getChatInfo()).to.be.eventually.rejected;
+  });
+
+  it('Should return a single row', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientOneChatRowStub),
+    });
+
+    return expect(postgres.getChatInfo(1)).to.be.eventually.deep.equal({
+      id: 1,
+      title: 'Row 1 title',
+    });
   });
 });

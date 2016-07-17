@@ -64,3 +64,16 @@ export const createMessage = (text) => new Promise((accept, reject) => {
           .then(done);
   });
 });
+
+
+export const getChatInfo = (chatId) => new Promise((accept, reject) => {
+  connect(reject, (client, done) => {
+    client.query('SELECT * FROM chats WHERE chat_id = $1', [chatId])
+          .then(res => accept(res.rows.map(row => ({
+            id: row.chat_id,
+            title: row.title,
+          }))[0]))
+          .catch(() => reject('Error on SELECT'))
+          .then(done);
+  });
+});
