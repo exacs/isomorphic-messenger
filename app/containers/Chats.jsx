@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import ChatList from 'components/ChatList';
 
 import { connect } from 'react-redux';
+import { fetchChats } from 'actions/index';
 
 const Chats = ({ chats, children }) => (
-  <div>
+  <div className="root">
     <aside>
       <ChatList chats={ chats } />
     </aside>
@@ -24,6 +25,8 @@ Chats.propTypes = {
 
   children: PropTypes.element,
 };
+
+Chats.fetchData = ({ store }) => store.dispatch(fetchChats());
 
 const mapChatToChat = chat => ({
   title: chat.title,
