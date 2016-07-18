@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
+
 
 const ChatListItem = ({ title, link }) => (
   <div>
-    <a href={ link }>{ title }</a>
+    <Link to={ link }>{ title }</Link>
   </div>
 );
 
