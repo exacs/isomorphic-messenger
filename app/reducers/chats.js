@@ -1,5 +1,6 @@
 import { SEND_MESSAGE_REQUEST,
-         FETCH_MESSAGES_SUCCESS } from 'actions/index';
+         FETCH_MESSAGES_SUCCESS,
+         FETCH_CHATS_SUCCESS } from 'actions/index';
 
 const INITIAL_STATE = {};
 
@@ -11,6 +12,14 @@ function addMessage(chat, messageKey, chatId) {
     title: (chat && chat.title) || '',
     id: (chat && chat.id) || chatId,
   });
+}
+
+function chatsArrayToObject(chats, options) {
+  const newObject = {};
+  chats.forEach(({ id, title }) => {
+    newObject[id] = Object.assign({}, { id, title }, options);
+  });
+  return newObject;
 }
 
 function chatsReducer(chats = INITIAL_STATE, action) {
@@ -26,6 +35,8 @@ function chatsReducer(chats = INITIAL_STATE, action) {
           chats[action.chatId]
         ),
       });
+    case FETCH_CHATS_SUCCESS:
+      return Object.assign({}, chats, chatsArrayToObject(action.response));
     default:
       return chats;
   }

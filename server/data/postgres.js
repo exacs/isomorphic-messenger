@@ -23,6 +23,18 @@ const connect = (reject, callback) => {
   });
 };
 
+export const getChats = () => new Promise((accept, reject) => {
+  connect(reject, (client, done) => {
+    client.query('SELECT * FROM chats')
+          .then(res => accept(res.rows.map(row => ({
+            id: row.chat_id,
+            title: row.title,
+          }))))
+          .catch(() => reject('Error on SELECT'))
+          .then(done);
+  });
+});
+
 export const getMessagesFromChat = chatId => new Promise((accept, reject) => {
   connect(reject, (client, done) => {
     client.query('SELECT * FROM messages WHERE chat_id = $1', [chatId])

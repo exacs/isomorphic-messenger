@@ -10,6 +10,10 @@ export const FETCH_MESSAGES_REQUEST = 'FETCH_MESSAGES_REQUEST';
 export const FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS';
 export const FETCH_MESSAGES_FAILURE = 'FETCH_MESSAGES_FAILURE';
 
+export const FETCH_CHATS_REQUEST = 'FETCH_CHATS_REQUEST';
+export const FETCH_CHATS_SUCCESS = 'FETCH_CHATS_SUCCESS';
+export const FETCH_CHATS_FAILURE = 'FETCH_CHATS_FAILURE';
+
 //
 // Asynchronous actions
 //
@@ -43,4 +47,16 @@ export const fetchMessages = (chatId = 1) => ({
     method: 'GET',
   },
   chatId,
+});
+
+export const fetchChats = () => ({
+  [CALL_API]: {
+    endpoint: '/chats',
+    actionTypes: [
+      FETCH_CHATS_REQUEST,
+      FETCH_CHATS_SUCCESS,
+      FETCH_CHATS_FAILURE,
+    ],
+    method: 'GET',
+  },
 });

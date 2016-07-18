@@ -3,14 +3,16 @@
  *
  * Functions to write and read messages from a chat
  */
-import { getMessagesFromChat,
+import { getChats,
+         getMessagesFromChat,
          createMessagesInChat,
          getChatInfo } from '../data/postgres';
 
-export default chatId => ({
+const chats = chatId => ({
   info() {
     return getChatInfo(chatId);
   },
+
   read() {
     return getMessagesFromChat(chatId);
   },
@@ -19,3 +21,7 @@ export default chatId => ({
     return createMessagesInChat(chatId, message);
   },
 });
+
+chats.all = () => getChats();
+
+export default chats;
