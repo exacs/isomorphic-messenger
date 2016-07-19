@@ -23,7 +23,7 @@ const pgClientOneRowStub = {
     return new Promise(accept =>
       accept({
         rows: [
-          { message_id: 1, text: 'Row 1 text' },
+          { message_id: 1, text: 'Row 1 text', creation_date: 0 },
         ],
       })
     );
@@ -120,6 +120,68 @@ describe('createMessages', function() {
     });
 
     return expect(postgres.createMessage()).to.be.eventually.fulfilled;
+  });
+});
+
+describe('getMessagesFromChat', function() {
+  it('Should notify the connection error', function() {
+
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgFailedConnectionStub,
+    });
+
+    return expect(postgres.getMessagesFromChat(1)).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query error', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientFailedQueryStub),
+    });
+
+    return expect(postgres.getMessagesFromChat(1)).to.be.eventually.rejected;
+  });
+
+  it('Should return rows of messages', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientOneRowStub),
+    });
+
+    return expect(postgres.getMessagesFromChat(1)).to.be.eventually.deep.equal([{
+      id: 1,
+      text: 'Row 1 text',
+      creationDate: 0,
+    }]);
+  });
+});
+
+describe('createMessageInChat', function() {
+  it('Should notify the connection error', function() {
+
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgFailedConnectionStub,
+    });
+
+    return expect(postgres.createMessageInChat()).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query error', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientFailedQueryStub),
+    });
+
+    return expect(postgres.createMessageInChat()).to.be.eventually.rejected;
+  });
+
+  it('Should notify the query success', function() {
+    const postgres = proxyquire('../../server/data/postgres.js', {
+      pg: pgSuccessConnectionStubFactory(pgClientOneRowStub),
+    });
+
+    return expect(postgres.createMessageInChat(1, '')).to.be.eventually.deep.equal({
+      id: 1,
+      text: 'Row 1 text',
+      creationDate: 0,
+    });
   });
 });
 
