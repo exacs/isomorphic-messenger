@@ -34,7 +34,7 @@ export const sendMessage = (text, chatId = 1) => ({
   id: NEXT_KEY,
   chatId,
   text,
-  creationDate: Date.now(),
+  creationDate: Date.now()/1000,
 });
 
 export const fetchMessages = (chatId = 1) => ({
