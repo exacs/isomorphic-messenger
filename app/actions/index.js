@@ -20,7 +20,7 @@ export const FETCH_CHATS_FAILURE = 'FETCH_CHATS_FAILURE';
 let NEXT_KEY = 0;
 export const sendMessage = (text, chatId = 1) => ({
   [CALL_API]: {
-    endpoint: '/messages',
+    endpoint: `/chats/${chatId}/messages`,
     actionTypes: [
       SEND_MESSAGE_REQUEST,
       SEND_MESSAGE_SUCCESS,

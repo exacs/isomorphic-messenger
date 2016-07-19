@@ -55,9 +55,19 @@ export const getMessagesFromChat = chatId => new Promise((accept, reject) => {
 
 export const createMessageInChat = (chatId, text) => new Promise((accept, reject) => {
   connect(reject, (client, done) => {
-    client.query('INSERT INTO messages (text, chat_id) VALUES ($1, $2)', [text, chatId])
-          .then(res => accept(res))
-          .catch(() => reject('Error on INSERT query'))
+    const fields = [
+      'message_id',
+      'text',
+      'EXTRACT(EPOCH FROM creation_date) as creation_date',
+    ];
+    client.query('INSERT INTO messages (text, chat_id) VALUES ($1, $2)' +
+                 `RETURNING ${fields.join(',')}`, [text, chatId])
+          .then(res => accept({
+            id: res.rows[0].message_id,
+            text: res.rows[0].text,
+            creationDate: res.rows[0].creation_date,
+          }))
+          .catch(err => {console.log(err); reject('Error on INSERT query')})
           .then(done);
   });
 });

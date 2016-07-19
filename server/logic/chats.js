@@ -5,7 +5,7 @@
  */
 import { getChats,
          getMessagesFromChat,
-         createMessagesInChat,
+         createMessageInChat,
          getChatInfo } from '../data/postgres';
 
 const chats = chatId => ({
@@ -18,7 +18,7 @@ const chats = chatId => ({
   },
 
   write(message) {
-    return createMessagesInChat(chatId, message);
+    return createMessageInChat(chatId, message);
   },
 });
 
