@@ -31,6 +31,15 @@ const chatsLogicStub = {
   },
 };
 
+const chatsLogicFailureStub = {
+  default(chatId) {
+    return {
+      read() { return Promise.reject(); },
+      write() { return Promise.reject(); },
+    };
+  },
+};
+
 //
 // GET /messages
 //
@@ -38,10 +47,15 @@ const apiRouter = proxyquire('../../server/routers/api', {
   '../logic/messages': messagesLogicStub,
   '../logic/chats': chatsLogicStub,
 }).default;
-const app = express();
-app.use(jsonParser, apiRouter);
+
+const apiRouterFailure = proxyquire('../../server/routers/api', {
+  '../logic/messages': messagesLogicStub,
+  '../logic/chats': chatsLogicFailureStub,
+}).default;
 
 describe('GET /messages', function() {
+  const app = express();
+  app.use(jsonParser, apiRouter);
   it('Should response with a emtpy array JSON object', function(done) {
     request(app)
       .get('/messages')
@@ -58,6 +72,8 @@ describe('GET /messages', function() {
 // POST /messages
 //
 describe('POST /messages', function() {
+  const app = express();
+  app.use(jsonParser, apiRouter);
   it('Should show that the "text" argument is missing', function(done) {
     request(app)
       .post('/messages')
@@ -77,6 +93,8 @@ describe('POST /messages', function() {
 });
 
 describe('Resource /chats/:chatid/messages', function() {
+  const app = express();
+  app.use(jsonParser, apiRouter);
   describe('GET request', function() {
     it('Should response with a emtpy array JSON object', function(done) {
       request(app)
@@ -105,6 +123,21 @@ describe('Resource /chats/:chatid/messages', function() {
         .send({ text: 'Hi' })
         .expect('Content-Type', /json/)
         .expect(201)
+        .end(done);
+    });
+  });
+});
+
+describe('Resource /chats/:chatid/messages failure', function() {
+  const app = express();
+  app.use(jsonParser, apiRouterFailure);
+
+  describe('GET request', function() {
+    it('Should respond with a failure', function(done) {
+      request(app)
+        .get('/chats/1/messages')
+        .expect('Content-Type', /json/)
+        .expect(500)
         .end(done);
     });
   });

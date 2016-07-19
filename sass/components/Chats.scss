@@ -1,0 +1,24 @@
+@import '../abstracts/variables';
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  display: none;
+  border-right: $border-base;
+
+  @media all and (min-width: 640px) {
+    display: block;
+    flex-grow: 0;
+    width: 320px;
+  }
+}
+
+.main {
+  flex-grow: 1;
+}

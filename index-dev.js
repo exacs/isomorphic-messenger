@@ -25,6 +25,7 @@ const options = {
 
 app.use(webpackDev(compiler, options));
 app.use(webpackHot(compiler));
+app.use(express.static('public'));
 app.use('/api', jsonParser, apiRouter);
 app.use((req, res) => {
   res.send(`

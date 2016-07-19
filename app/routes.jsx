@@ -1,7 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router';
-import App from 'containers/App';
+import Chats from 'containers/Chats';
+import Chat from 'containers/Chat';
 
 export default (
-  <Route path="/" component={App} />
+  <Route path="/chats" component={Chats}>
+    <Route path="/chats/:chat_id" component={Chat} />
+  </Route>
 );

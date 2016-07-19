@@ -13,7 +13,11 @@ import api from 'middleware/api.js';
 import { SEND_MESSAGE_REQUEST,
          SEND_MESSAGE_SUCCESS,
          SEND_MESSAGE_FAILURE,
-         sendMessage } from 'actions/index.js';
+         FETCH_MESSAGES_REQUEST,
+         FETCH_MESSAGES_SUCCESS,
+         FETCH_MESSAGES_FAILURE,
+         sendMessage,
+         fetchMessages } from 'actions/index.js';
 
 const middlewares = [api];
 const mockStore = configureStore(middlewares);
@@ -33,24 +37,27 @@ describe('Synchronous actions', function() {
 describe('Asynchronous action "sendMessage"', function() {
   it('Should create SEND_MESSAGE_SUCCESS when send message is correct', function() {
     // Nock
-    nock('http://example-api.com')
-      .post('/messages', { text: 'Some message' })
+    nock('http://example.com/api')
+      .post('/chats/1/messages', { text: 'Some message' })
       .reply(200, { body: { text: 'Some message' } });
 
     const store = mockStore({});
 
-    return store.dispatch(sendMessage('Some message'))
-                .then(() => {
+    return store.dispatch(sendMessage('Some message', 1))
+                .then(res => {
                   const [{ type: t1 }, { type: t2 }] = store.getActions();
                   expect([t1, t2]).to.be.deep.equal([
                     SEND_MESSAGE_REQUEST,
                     SEND_MESSAGE_SUCCESS,
                   ]);
+
+                  const [a1, a2] = store.getActions();
+                  expect(a2.response.body.text).to.be.equal('Some message');
                 });
   });
 
   it('Should create SEND_MESSAGE_FAILURE when send message is not correct', function() {
-    nock('http://example-api.com')
+    nock('http://example.com/api')
       .post('/messages')
       .reply(500, {});
 
@@ -62,6 +69,44 @@ describe('Asynchronous action "sendMessage"', function() {
                   expect([t1, t2]).to.be.deep.equal([
                     SEND_MESSAGE_REQUEST,
                     SEND_MESSAGE_FAILURE,
+                  ]);
+                });
+  });
+});
+
+describe('Asynchronous action "fetchMessages"', function() {
+  it('Should create FETCH_MESSAGES_SUCCESS always', function() {
+    // Nock
+    nock('http://example.com/api')
+      .get('/chats/1/messages')
+      .reply(200, { body: ['Some message', 'some other'] });
+
+    const store = mockStore({});
+
+    return store.dispatch(fetchMessages())
+                .then(() => {
+                  const [{ type: t1 }, { type: t2 }] = store.getActions();
+                  expect([t1, t2]).to.be.deep.equal([
+                    FETCH_MESSAGES_REQUEST,
+                    FETCH_MESSAGES_SUCCESS,
+                  ]);
+                });
+  });
+
+  it('Should create FETCH_MESSAGES_SUCCESS always', function() {
+    // Nock
+    nock('http://example.com/api')
+      .get('/chats/1/messages')
+      .reply(500, {});
+
+    const store = mockStore({});
+
+    return store.dispatch(fetchMessages())
+                .then(() => {
+                  const [{ type: t1 }, { type: t2 }] = store.getActions();
+                  expect([t1, t2]).to.be.deep.equal([
+                    FETCH_MESSAGES_REQUEST,
+                    FETCH_MESSAGES_FAILURE,
                   ]);
                 });
   });

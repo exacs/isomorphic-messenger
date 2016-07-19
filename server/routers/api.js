@@ -16,11 +16,17 @@ router.use((req, res, next) => {
   next();
 });
 
+router.get('/chats', (req, res) => {
+  chats.all()
+       .then(chs => res.status(200).json(chs))
+       .catch(() => res.status(500).json({ error: 'Service unavailable' }));
+});
+
 router.get('/chats/:chat_id/messages', (req, res) => {
   const chatId = req.params.chat_id;
   chats(chatId).read()
-    .then(messages => res.status(200).json(messages))
-    .catch(() => res.status(500).json({ error: 'Service unavailable' }));
+               .then(messages => res.status(200).json(messages))
+               .catch(() => res.status(500).json({ error: 'Service unavailable' }));
 });
 
 router.post('/chats/:chat_id/messages', (req, res) => {
@@ -32,8 +38,8 @@ router.post('/chats/:chat_id/messages', (req, res) => {
     return;
   }
   chats(chatId).write(req.body.text)
-    .then(() => res.status(201).json({ text: req.body.text }))
-    .catch(() => res.status(500).json({ error: 'Service unavailable' }));
+               .then(message => res.status(201).json(message))
+               .catch(err => res.status(500).json({ error: 'Service unavailable', err }));
 });
 
 

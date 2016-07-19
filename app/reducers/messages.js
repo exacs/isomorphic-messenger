@@ -1,6 +1,7 @@
 import { SEND_MESSAGE_REQUEST,
          SEND_MESSAGE_SUCCESS,
-         SEND_MESSAGE_FAILURE } from 'actions/index';
+         SEND_MESSAGE_FAILURE,
+         FETCH_MESSAGES_SUCCESS } from 'actions/index';
 
 // The state is an array of Messages. Each Message is an object with two fields:
 // - A text (string) representing the text of the  message
@@ -16,6 +17,14 @@ export const FAILURE = 'SEND_FAILURE';
 const INITIAL_STATE = {};
 let NEXT_ID = 0;
 
+const messagesArrayToObject = (messages, options) => {
+  const newObject = {};
+  messages.forEach(({ text, id, creationDate }) => {
+    newObject[id] = Object.assign({}, { text, id, creationDate }, options);
+  });
+  return newObject;
+};
+
 const messagesReducer = (messages = INITIAL_STATE, action) => {
   switch (action.type) {
     case SEND_MESSAGE_REQUEST:
@@ -24,6 +33,7 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
         [action.key]: {
           id: NEXT_ID,
           text: action.text,
+          creationDate: action.creationDate,
           status: SENDING,
         },
       });
@@ -32,6 +42,7 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
         [action.key]: {
           id: messages[action.key].id,
           text: messages[action.key].text,
+          creationDate: action.response.creationDate,
           status: SUCCESS,
         },
       });
@@ -40,9 +51,17 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
         [action.key]: {
           id: messages[action.key].id,
           text: messages[action.key].text,
+          creationDate: messages[action.key].creationDate,
           status: FAILURE,
         },
       });
+
+    case FETCH_MESSAGES_SUCCESS:
+      return Object.assign(
+        {},
+        messages,
+        messagesArrayToObject(action.response, { status: SUCCESS })
+      );
     default:
       return messages;
   }
