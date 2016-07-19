@@ -13,23 +13,34 @@ import { SENDING as REACT_SENDING,
          SUCCESS as REACT_SUCCESS,
          FAILURE as REACT_FAILURE } from 'components/Message';
 
-const Chat = ({ messages, submitMessage }) => (
-  <div className={ styles.container }>
-    <header className={ styles.header }>
-      Messages
-    </header>
-    <main className={ styles.body }>
-      <MessageList messages={messages} />
-    </main>
-    <footer className={ styles.footer }>
-      <NewMessage onSubmit={ submitMessage } />
-    </footer>
-  </div>
-);
+class Chat extends React.Component {
+  componentDidMount() {
+    if (this.props.messages.length === 0) {
+      this.props.fetchMessages();
+    }
+  }
+  render() {
+    const { messages, submitMessage } = this.props;
+    return (
+      <div className={ styles.container }>
+        <header className={ styles.header }>
+          Messages
+        </header>
+        <main className={ styles.body }>
+          <MessageList messages={messages} />
+        </main>
+        <footer className={ styles.footer }>
+          <NewMessage onSubmit={ submitMessage } />
+        </footer>
+      </div>
+    );
+  }
+}
 
 Chat.propTypes = {
   messages: PropTypes.array,
   submitMessage: PropTypes.func,
+  fetchMessages: PropTypes.func,
 };
 
 Chat.fetchData = ({ store }) => store.dispatch(fetchMessages());
@@ -53,6 +64,7 @@ const mapStateToProps = ({ messages }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   submitMessage: text => dispatch(sendMessage(text)),
+  fetchMessages: () => dispatch(fetchMessages()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

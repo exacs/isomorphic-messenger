@@ -4,16 +4,26 @@ import ChatList from 'components/ChatList';
 import { connect } from 'react-redux';
 import { fetchChats } from 'actions/index';
 
-const Chats = ({ chats, children }) => (
-  <div className="root">
-    <aside>
-      <ChatList chats={ chats } />
-    </aside>
-    <main>
-      { children }
-    </main>
-  </div>
-);
+class Chats extends React.Component {
+  componentDidMount() {
+    if (this.props.chats.length === 0) {
+      this.props.fetchChats();
+    }
+  }
+  render() {
+    const { chats, children } = this.props;
+    return (
+      <div className="root">
+        <aside>
+          <ChatList chats={ chats } />
+        </aside>
+        <main>
+          { children }
+        </main>
+      </div>
+    );
+  }
+}
 
 Chats.propTypes = {
   chats: PropTypes.arrayOf(
@@ -22,8 +32,8 @@ Chats.propTypes = {
       link: PropTypes.string.isRequired,
     })
   ),
-
   children: PropTypes.element,
+  fetchChats: PropTypes.func,
 };
 
 Chats.fetchData = ({ store }) => store.dispatch(fetchChats());
@@ -37,6 +47,8 @@ const mapStateToProps = ({ chats }) => ({
   chats: Object.keys(chats).map(key => mapChatToChat(chats[key])),
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  fetchChats: () => dispatch(fetchChats()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chats);
