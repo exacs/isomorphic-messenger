@@ -15,7 +15,7 @@ class Chats extends React.Component {
     const { chats, children } = this.props;
     return (
       <div className={ styles.container }>
-        <aside className={ styles.sidebar }>
+        <aside className={ children ? styles.sidebar : '' }>
           <ChatList chats={ chats } />
         </aside>
         <main className={ styles.main }>
