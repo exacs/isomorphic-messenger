@@ -38,6 +38,9 @@ describe('reducers/messages: Action SEND_MESSAGE_REQUEST', function() {
       type: SEND_MESSAGE_REQUEST,
       key: 'key1',
       text: 'Hello World',
+      response: {
+        creationDate: 0,
+      },
     };
     const newState = reduce(obj, action);
     expect(newState.key1.text).to.be.equal('Hello World');
@@ -58,6 +61,9 @@ describe('reducers/messages: Action SEND_MESSAGE_SUCCESS', function() {
     const action = {
       type: SEND_MESSAGE_SUCCESS,
       key: 'key_ok',
+      response: {
+        creationDate: 0,
+      },
     };
 
     const newState = reduce(obj, action);
@@ -65,6 +71,7 @@ describe('reducers/messages: Action SEND_MESSAGE_SUCCESS', function() {
       id: 870,
       text: 'Message 870',
       status: SUCCESS,
+      creationDate: 0,
     });
   });
 
@@ -85,6 +92,7 @@ describe('reducers/messages: Action SEND_MESSAGE_FAILURE', function() {
       id: 870,
       text: 'Message 870',
       status: SENDING,
+      creationDate: 0,
     },
   };
   deepFreeze(obj);
@@ -99,6 +107,7 @@ describe('reducers/messages: Action SEND_MESSAGE_FAILURE', function() {
       id: 870,
       text: 'Message 870',
       status: FAILURE,
+      creationDate: 0,
     });
   });
 

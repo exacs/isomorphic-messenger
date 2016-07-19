@@ -38,12 +38,12 @@ describe('Asynchronous action "sendMessage"', function() {
   it('Should create SEND_MESSAGE_SUCCESS when send message is correct', function() {
     // Nock
     nock('http://example.com/api')
-      .post('/messages', { text: 'Some message' })
+      .post('/chats/1/messages', { text: 'Some message' })
       .reply(200, { body: { text: 'Some message' } });
 
     const store = mockStore({});
 
-    return store.dispatch(sendMessage('Some message'))
+    return store.dispatch(sendMessage('Some message', 1))
                 .then(res => {
                   const [{ type: t1 }, { type: t2 }] = store.getActions();
                   expect([t1, t2]).to.be.deep.equal([

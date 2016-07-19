@@ -38,8 +38,8 @@ router.post('/chats/:chat_id/messages', (req, res) => {
     return;
   }
   chats(chatId).write(req.body.text)
-               .then(message => {console.log(message); res.status(201).json(message)})
-               .catch(err => { console.log(err); res.status(500).json({ error: 'Service unavailable' })});
+               .then(message => res.status(201).json(message))
+               .catch(err => res.status(500).json({ error: 'Service unavailable', err }));
 });
 
 
