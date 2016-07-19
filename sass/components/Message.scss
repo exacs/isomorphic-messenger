@@ -6,6 +6,16 @@
   padding-bottom: 16px;
   max-width: 320px;
   border-bottom: $border-base;
+  text-align: right;
+}
+
+.text {
+  display: inline-block;
+  text-align: left;
+}
+
+.date {
+  padding: 0 4px;
 }
 
 .statusSending {

@@ -37,10 +37,16 @@ export const getChats = () => new Promise((accept, reject) => {
 
 export const getMessagesFromChat = chatId => new Promise((accept, reject) => {
   connect(reject, (client, done) => {
-    client.query('SELECT * FROM messages WHERE chat_id = $1', [chatId])
+    const fields = [
+      'message_id',
+      'text',
+      'EXTRACT(EPOCH FROM creation_date) as creation_date',
+    ];
+    client.query(`SELECT ${fields.join(',')} FROM messages WHERE chat_id = $1`, [chatId])
           .then(res => accept(res.rows.map(row => ({
             id: row.message_id,
             text: row.text,
+            creationDate: row.creation_date,
           }))))
           .catch(() => reject('Error on SELECT'))
           .then(done);

@@ -19,8 +19,8 @@ let NEXT_ID = 0;
 
 const messagesArrayToObject = (messages, options) => {
   const newObject = {};
-  messages.forEach(({ text, id }) => {
-    newObject[id] = Object.assign({}, { text, id }, options);
+  messages.forEach(({ text, id, creationDate }) => {
+    newObject[id] = Object.assign({}, { text, id, creationDate }, options);
   });
   return newObject;
 };
@@ -33,6 +33,7 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
         [action.key]: {
           id: NEXT_ID,
           text: action.text,
+          creationDate: action.creationDate,
           status: SENDING,
         },
       });
@@ -41,6 +42,7 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
         [action.key]: {
           id: messages[action.key].id,
           text: messages[action.key].text,
+          creationDate: action.response.creationDate,
           status: SUCCESS,
         },
       });
@@ -49,6 +51,7 @@ const messagesReducer = (messages = INITIAL_STATE, action) => {
         [action.key]: {
           id: messages[action.key].id,
           text: messages[action.key].text,
+          creationDate: messages[action.key].creationDate,
           status: FAILURE,
         },
       });

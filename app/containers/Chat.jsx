@@ -55,6 +55,7 @@ const mapMessageToMessage = message => {
   return {
     status: statusMap[message.status],
     text: message.text,
+    date: message.creationDate,
   };
 };
 

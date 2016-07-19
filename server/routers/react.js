@@ -27,8 +27,10 @@ export default (req, res) => {
 
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
+      console.log('error', error);
       res.status(500).send(error.message);
     } else if (redirectLocation) {
+      console.log('redirectLocation', redirectLocation);
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
       const components = renderProps.components;
@@ -40,18 +42,24 @@ export default (req, res) => {
 
       fetchData({ store, location, params, history })
         .then(
-          () => {
+          (action) => {
+            console.log('action response', action);
             const body = renderToString(
               <Provider store={store}>
                 <RouterContext {...renderProps} />
               </Provider>
             );
+            console.log('satisfied');
 
             const state = store.getState();
+            console.log('----- THE STATE ------');
+            console.log(state);
+            console.log('----------------------');
             sendContent(body, state);
           }
         );
     } else {
+      console.log('Not found');
       res.status(404).send('Not found');
     }
   });

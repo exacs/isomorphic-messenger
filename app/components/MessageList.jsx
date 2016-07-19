@@ -9,7 +9,7 @@ export default ({ messages }) => (
         const item = messages[key];
         return (
           <li className={ styles.item } key={ key }>
-            <Message text={ item.text } status={ item.status } />
+            <Message text={ item.text } status={ item.status } date={ item.date } />
           </li>
         );
       })
