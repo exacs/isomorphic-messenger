@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import styles from 'components/ChatListItem.scss';
 
 
 const ChatListItem = ({ title, link }) => (
-  <div>
-    <Link to={ link }>{ title }</Link>
-  </div>
+  <Link className={ styles.container } to={ link }>{ title }</Link>
 );
 
 ChatListItem.propTypes = {

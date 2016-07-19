@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import ChatList from 'components/ChatList';
+import styles from 'components/Chats.scss';
 
 import { connect } from 'react-redux';
 import { fetchChats } from 'actions/index';
@@ -13,11 +14,11 @@ class Chats extends React.Component {
   render() {
     const { chats, children } = this.props;
     return (
-      <div className="root">
-        <aside>
+      <div className={ styles.container }>
+        <aside className={ styles.sidebar }>
           <ChatList chats={ chats } />
         </aside>
-        <main>
+        <main className={ styles.main }>
           { children }
         </main>
       </div>
